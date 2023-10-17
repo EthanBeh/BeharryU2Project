@@ -13,12 +13,19 @@ public class LinearEquation {
         this.y2 = y2;
     }
 
+    public boolean exception() {
+        return run == 0;
+    }
+
     public void riseRun() {
         rise = y1 - y2;
         run = x1 - x2;
     }
 
     public double slope() {
+        if (exception()) {
+            return 0.0;
+        }
         return roundedToHundredth( (double) rise / run);
     }
 
@@ -27,6 +34,9 @@ public class LinearEquation {
     }
 
     public String equation() {
+        if (exception()) {
+            return "x = " + x1;
+        }
         if (slope() == 0.0) {
             return "y = " + yIntercept();
         }
@@ -54,7 +64,18 @@ public class LinearEquation {
     }
 
     public String lineInfo() {
-        return "The two points are: " + coordinateForX(x1) + " and " + coordinateForX(x2) + "\nThe equation of the line between these points is: " + equation() + "\nThe slope of this line is: " + slope() + "\nThe y-intercept of this line is: " + yIntercept() + "\nThe distance between these points is " + distance();
+        String str =  "The two points are: " + coordinateForX(x1) + " and " + coordinateForX(x2) + "\n";
+        str += "The equation of the line between these points is: " + equation() + "\n";
+        if (!exception()) {
+            str += "The slope of this line is: " + slope() + "\n";
+        } else {
+            str += "This line does not have a slope";
+        }
+        if (!exception()) {
+            str += "The y-intercept of this line is: " + yIntercept() + "\n";
+        }
+        str += "The distance between these points is " + distance();
+        return str;
     }
 
     private double roundedToHundredth(double toRound) {
