@@ -13,6 +13,10 @@ public class LinearEquation {
         this.y2 = y2;
     }
 
+    public int getX1() {
+        return x1;
+    }
+
     public boolean exception() {
         return run == 0;
     }
@@ -53,7 +57,7 @@ public class LinearEquation {
         double y = slope() * x + yIntercept();
         int intX = (int) x;
         int intY = (int) y;
-        if (intX == x && intY == y) {
+        if (intX == x && intY == y) { //getting rid of unnecessary doubles
             return "(" + intX + ", " + intY + ")";
         } else if (intX == x) {
             return "(" + intX + ", " + y + ")";
@@ -64,12 +68,17 @@ public class LinearEquation {
     }
 
     public String lineInfo() {
-        String str =  "The two points are: " + coordinateForX(x1) + " and " + coordinateForX(x2) + "\n";
+        String str = "";
+        if (!exception()) {
+            str +=  "The two points are: " + coordinateForX(x1) + " and " + coordinateForX(x2) + "\n";
+        } else {
+            str += "The two points are: (" + x1 + ", " + y1 + ") and (" + x2 + ", " + y2 + ")\n";
+        }
         str += "The equation of the line between these points is: " + equation() + "\n";
         if (!exception()) {
             str += "The slope of this line is: " + slope() + "\n";
         } else {
-            str += "This line does not have a slope";
+            str += "This line does not have a slope\n";
         }
         if (!exception()) {
             str += "The y-intercept of this line is: " + yIntercept() + "\n";

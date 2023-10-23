@@ -14,6 +14,7 @@ public class LinearEquationLogic {
         info();
         question();
         loop();
+        System.out.println("Thank you for using the slope calculator, goodbye!");
     }
 
     private void greet() {
@@ -42,7 +43,15 @@ public class LinearEquationLogic {
         System.out.print("Enter any x value: ");
         double x = scan.nextDouble();
         scan.nextLine();
-        System.out.println("The coordinate pair for that x value is: " + linearEquation.coordinateForX(x));
+        if (linearEquation.exception()) {
+            if (x != (double) linearEquation.getX1()) {
+                System.out.println("There is no y value for that x point on this line");
+            } else {
+                System.out.println("There are infinitely many points for that x value on this line");
+            }
+        } else {
+            System.out.println("The coordinate pair for that x value is: " + linearEquation.coordinateForX(x));
+        }
         System.out.println();
     }
 
@@ -54,6 +63,8 @@ public class LinearEquationLogic {
             getInfo();
             info();
             question();
+            System.out.print("Would you like to try again for a new pair of points? (y/n) ");
+            yesOrNo = scan.nextLine();
         }
         System.out.println("Thank you!");
     }
