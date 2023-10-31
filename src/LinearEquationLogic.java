@@ -14,7 +14,6 @@ public class LinearEquationLogic {
         info();
         question();
         loop();
-        System.out.println("Thank you for using the slope calculator, goodbye!");
     }
 
     private void greet() {
@@ -29,12 +28,11 @@ public class LinearEquationLogic {
         input = scan.nextLine();
         int x2 = Integer.parseInt(input.substring(1, input.indexOf(",")));
         int y2 = Integer.parseInt(input.substring(input.indexOf(" ") + 1, input.indexOf(")")));
-        linearEquation = new LinearEquation(x1, x2, y1, y2);
+        linearEquation = new LinearEquation(x1, y1, x2, y2);
         System.out.println();
     }
 
     private void info() {
-        linearEquation.riseRun();
         System.out.println(linearEquation.lineInfo());
         System.out.println();
     }
@@ -66,6 +64,6 @@ public class LinearEquationLogic {
             System.out.print("Would you like to try again for a new pair of points? (y/n) ");
             yesOrNo = scan.nextLine();
         }
-        System.out.println("Thank you!");
+        System.out.println("Thank you for using the slope calculator, goodbye!");
     }
 }

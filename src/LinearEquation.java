@@ -6,11 +6,13 @@ public class LinearEquation {
     private int rise;
     private int run;
 
-    public LinearEquation(int x1, int x2, int y1, int y2) {
+    public LinearEquation(int x1, int y1, int x2, int y2) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        rise = y1 - y2;
+        run = x1 - x2;
     }
 
     public int getX1() {
@@ -21,16 +23,11 @@ public class LinearEquation {
         return run == 0;
     }
 
-    public void riseRun() {
-        rise = y1 - y2;
-        run = x1 - x2;
-    }
-
     public double slope() {
         if (exception()) {
             return 0.0;
         }
-        return roundedToHundredth( (double) rise / run);
+        return roundedToHundredth((double) rise / run);
     }
 
     public double yIntercept() {
@@ -44,7 +41,25 @@ public class LinearEquation {
         if (slope() == 0.0) {
             return "y = " + yIntercept();
         }
-        return "y = " + rise + "/" + run + "x + " + yIntercept();
+        String m;
+        if (slope() == 1) {
+            m = "";
+        } else if (slope() == -1) {
+            m = "-";
+        } else if (slope() % 1 == 0) {
+            m = Integer.toString((int) slope());
+        } else if (run < 0) { //works if both rise & run r neg or only run is neg :thumbsup:
+            m = -1 * rise + "/" + -1 * run;
+        } else {
+            m = rise + "/" + run;
+        }
+        if (yIntercept() == 0) {
+            return ("y = " + m + "x");
+        } else if (yIntercept() < 1) {
+            return ("y = " + m + "x - " + Math.abs(yIntercept()));
+        } else {
+            return "y = " + m + "x + " + yIntercept();
+        }
     }
 
     public double distance() {
@@ -69,11 +84,7 @@ public class LinearEquation {
 
     public String lineInfo() {
         String str = "";
-        if (!exception()) {
-            str +=  "The two points are: " + coordinateForX(x1) + " and " + coordinateForX(x2) + "\n";
-        } else {
-            str += "The two points are: (" + x1 + ", " + y1 + ") and (" + x2 + ", " + y2 + ")\n";
-        }
+        str += "The two points are: (" + x1 + ", " + y1 + ") and (" + x2 + ", " + y2 + ")\n";
         str += "The equation of the line between these points is: " + equation() + "\n";
         if (!exception()) {
             str += "The slope of this line is: " + slope() + "\n";
